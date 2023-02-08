@@ -1,4 +1,4 @@
-##0x00-shell, Basics
+0x00-shell, Basics
  Describing basic command that are use to navigate in a shell
 
 
