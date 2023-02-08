@@ -1,5 +1,6 @@
-##0x00-shell, Basics
- Describing basic command that are use to navigate in a shell
+## 0x00-shell, Basics
+
+This Scripts describes basic command that are use to navigate in a shell
 
 
 [0-current-working-directory](./0-current-working-directory) - 
