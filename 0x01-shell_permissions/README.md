@@ -11,54 +11,9 @@ The ls -l command is use to check the permission of a file or directory
      -rw------- 1 root root 0 Feb  2 05:44 file
 
 Here are some Script describing some Shell permissions
- 
-## Table of Content
 
 
-* [Mandatory](Mandatory)
-
-  * [0-iam_betty](#0-iam_betty)
-
-  * [1-who_am_i](#who_am_i)
-
-  * [2-groups](#2-groups)
-
-  * [3-new_owner](#3-new_owner)
-
-  * [4-empty](#4-empty)
-
-  * [5-execute](#5-execute)
-
-  * [6-multiple_permissions](#6-multiple_permissions)
-
-  * [7-everybody](#7-everybody)
-
-  * [8-James_Bond](#8-James_Bond)
-
-  * [9- * John_Doe](#9-John_Doe)
-
-  * [10-mirror_permissions](#10-mirror_permissions)
-
-  * [11-directories_permissions](#11-directories_permissions)
-
-  * [12-directory_permissions](#12-directory_permissions)
-
-  * [13-change_group](#13-change_group)
-
-* [Advanced](Advanced)
-
-  * []()
-
-  * []()
- 
-  * []()
- 
-  * []()
- 
-  * []()
-
-
-(Mandatory)
+## Mandatory
 
 [0-iam_betty](0-iam_betty) - A script that switches the current user to the user `betty`.
 
