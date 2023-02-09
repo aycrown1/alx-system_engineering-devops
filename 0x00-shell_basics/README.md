@@ -78,14 +78,15 @@ We can assume that the directory /tmp/u will exist when we will run your script
 
 [103-commas](103-commas) - A script that lists all the files and directories of the current directory, separated by commas (,).
 
-    Directory names should end with a slash (/)
-    Files and directories starting with a dot (.) should be listed
-    The listing should be alpha ordered, except for the directories . and .. which should be listed at the very beginning
-    Only digits and letters are used to sort; Digits should come first
-    You can assume that all the files we will test with will have at least one letter or one digit
-    The listing should end with a new line
+-  Directory names should end with a slash (/)
+-  Files and directories starting with a dot (.) should be listed
+- The listing should be alpha ordered, except for the directories . and .. which should be listed at the very beginning
+- Only digits and letters are used to sort; Digits should come first
+- You can assume that all the files we will test with will have at least one letter or one digit
+- The listing should end with a new line
 
 
 [school.mgc](school.mgc) - A magic file contains lines describing magic numbers, which identify particular types of files. Lines beginning with a > or & character represent continuation lines to a preceding main entry
+
 
 The file command uses the /etc/magic file in its attempt to identify the type of a binary file.
