@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# redirects /redirect_me to another site
+sudo apt install nginx -y;
+sudo service nginx start;
+url="location /redirect_me {\n\treturn 301 http://youtube.com;\n}";
+sudo sed -i "37i $url" /etc/nginx/sites-available/default;
+sudo service nginx reload;
+sudo service nginx restart;
