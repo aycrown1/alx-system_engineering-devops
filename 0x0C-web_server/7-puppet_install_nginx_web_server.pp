@@ -16,7 +16,7 @@ file { '/etc/nginx/sites-available/default':
     }
 
     location /redirect_me {
-        return 301 https://www.example.com/new_location;
+        return 301 https://www.youtube.com/;
     }
 }",
   notify  => Service['nginx'],
@@ -35,7 +35,7 @@ file { '/var/www/html/index.html':
 
 # Enable Nginx site
 exec { 'enable_nginx_site':
-  command => 'ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/',
+  command => '/bin/ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/',
   creates => '/etc/nginx/sites-enabled/default',
   require => [Package['nginx'], File['/etc/nginx/sites-available/default']],
   notify  => Service['nginx'],
