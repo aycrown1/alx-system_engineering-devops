@@ -28,7 +28,7 @@ server {
 }
 EOF
 
-echo "Hello World!" | sudo tee /var/www/html/index.html
+echo "Hello World!" | sudo tee /etc/nginx/html/index.html
 header="add_header X-Served-By $(hostname);";
 sudo sed -i '/server {/a \ \ \ \ '"$header"'' /etc/nginx/sites-available/default
 sudo nginx -t
