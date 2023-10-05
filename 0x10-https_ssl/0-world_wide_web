@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Displays information about subdomains
+# shellcheck disable=SC2086
+
+func() {
+    IP=$(dig "$1.$2" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" | head -1)
+    ANS=$(dig "$1.$2" | grep -A1 'ANSWER SECTION:' | tail -1)
+    REC=$(awk '{ print $4 }' <<<"$ANS")
+    echo "The subdomain $1 is a $REC record and points to $IP"
+}
+
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+if [ $# -eq 1 ]; then
+    domain="$1"
+    func 'www' "$domain"
+    func 'lb-01' "$domain"
+    func 'web-01' "$domain"
+    func 'web-02' "$domain"
+else
+    domain="$1"
+    subdomain="$2"
+    func "$subdomain" "$domain"
+fi
