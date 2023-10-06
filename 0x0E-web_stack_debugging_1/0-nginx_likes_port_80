@@ -1,4 +1,26 @@
 #!/usr/bin/env bash
-#fixes a Nginx server by changing the port to 80
-sed -i 's/8080/80/' /etc/nginx/sites-enabled/default
-service nginx restart
+# This script ensures that Nginx is running and listening on port 80.
+# Check Nginx configuration
+if ! sudo nginx -t &> /dev/null; then
+    echo "Nginx configuration test failed. Fixing configuration..."
+    sudo nginx -t  # Attempt to identify and fix configuration issues
+    sudo service nginx restart
+fi
+
+# Check if Nginx is listening on port 80
+if ! netstat -tuln | grep -q ':80'; then
+    echo "Nginx is not listening on port 80. Fixing..."
+    # Add a default server block to listen on port 80
+    echo "server {
+        listen 80 default_server;
+        server_name _;
+        location / {
+            root /var/www/html;
+            index index.html;
+        }
+    }" | sudo tee /etc/nginx/sites-available/default > /dev/null
+
+    # Enable the default server block
+    sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+    sudo service nginx restart
+fi
