@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # This script ensures that Nginx is running and listening on port 80.
 # Check Nginx configuration
 if ! sudo nginx -t &> /dev/null; then
@@ -24,3 +25,23 @@ if ! netstat -tuln | grep -q ':80'; then
     sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
     sudo service nginx restart
 fi
+=======
+
+# Check if Nginx is already listening on port 80
+if netstat -tuln | grep -q ':80'; then
+    echo "Nginx is already listening on port 80."
+else
+    # Create a symbolic link to enable the default site
+    ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+    # Restart Nginx to apply the changes
+    service nginx restart
+
+    # Verify if Nginx is now listening on port 80
+    if netstat -tuln | grep -q ':80'; then
+        echo "Nginx is now listening on port 80."
+    else
+        echo "Failed to configure Nginx to listen on port 80."
+    fi
+fi
+>>>>>>> ce38bd3 (0x12-web_stack_debugging_2)
