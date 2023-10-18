@@ -1,6 +1,14 @@
-# Install Nginx package
+# Update Ubuntu server
+exec { 'update server':
+  command => 'apt-get update',
+  user    => 'root',
+  provider => 'shell',
+}
+
+# Install Nginx server on a remote server
 package { 'nginx':
-  ensure => installed,
+  ensure   => present,
+  provider => 'apt',
 }
 
 # Create Nginx configuration file
@@ -19,33 +27,32 @@ file { '/etc/nginx/sites-available/default':
         return 301 https://www.youtube.com/;
     }
     add_header X-Served-By $hostname;
-}",
+  }",
   notify  => Service['nginx'],
 }
 
 # Create the document root directory
-file { '/etc/nginx/html/index.html':
+file { '/var/www/html':
   ensure => directory,
 }
 
 # Create an index.html file with the content "Hello World!"
-file { '/etc/nginx/html/index.html':
+file { '/var/www/html/index.html':
   ensure  => file,
   content => 'Hello World!',
 }
 
 # Enable Nginx site
-exec { 'enable_nginx_site':
-  command => '/bin/ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/',
-  creates => '/etc/nginx/sites-enabled/default',
+file { '/etc/nginx/sites-enabled/default':
+  ensure => link,
+  target => '/etc/nginx/sites-available/default',
   require => [Package['nginx'], File['/etc/nginx/sites-available/default']],
   notify  => Service['nginx'],
 }
 
-
 # Start the service
 service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => Exec['enable_nginx_site'],
+  ensure  => 'running',
+  enable  => 'true',
+  require => File['/etc/nginx/sites-enabled/default'],
 }
