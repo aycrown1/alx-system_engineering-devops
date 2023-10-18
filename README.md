@@ -6,7 +6,7 @@
  System engineering devOps is an approach to designing, analysing, managing complex system, automate and integrate the processes of software development, testing, and deployment, making it more effecient and collaborative.
 
  
-### [SHELL BASICS](0x00-shell_basics)
+### [SHELL BASICS](./0x00-shell_basics)
 
 A shell is a command-line interface that allows users to interact with an operating system. In DevOps, scripts and commands are often used in shell scripting for tasks like automation and system management.
 Shell basics involve using a command-line interface to interact with an operating system. You issue commands in the command prompt to perform actions like listing files with "ls," changing directories with "cd," and creating files or directories. Navigation is essential and relies on understanding relative and absolute paths. File and directory names are case-sensitive.
@@ -33,6 +33,6 @@ Shell skills are fundamental for tasks like system administration, DevOps, and s
 
 
 
-### SHELL PERMISSION
+### [SHELL PERMISSION](./0x01-shell_permissions)
 
 
