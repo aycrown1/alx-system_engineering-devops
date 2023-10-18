@@ -11,48 +11,17 @@ package { 'nginx':
   provider => 'apt',
 }
 
-# Create Nginx configuration file
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => "server {
-    listen 80;
-    server_name _;
-
-    location / {
-        root /var/www/html;
-        index index.html;
-    }
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/;
-    }
-    add_header X-Served-By $hostname;
-  }",
-  notify  => Service['nginx'],
-}
-
-# Create the document root directory
-file { '/var/www/html':
-  ensure => directory,
-}
-
-# Create an index.html file with the content "Hello World!"
-file { '/var/www/html/index.html':
-  ensure  => file,
-  content => 'Hello World!',
-}
-
-# Enable Nginx site
-file { '/etc/nginx/sites-enabled/default':
-  ensure => link,
-  target => '/etc/nginx/sites-available/default',
-  require => [Package['nginx'], File['/etc/nginx/sites-available/default']],
-  notify  => Service['nginx'],
+# custom Nginx response header
+file_line { 'add HTTP header':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_serve;',
+  line   => 'add_header X-Served by $hostname:'
 }
 
 # Start the service
 service { 'nginx':
   ensure  => 'running',
   enable  => 'true',
-  require => File['/etc/nginx/sites-enabled/default'],
+  require => Package['nginx']
 }
