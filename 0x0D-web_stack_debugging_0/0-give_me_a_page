@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
 # Update package list and install Apache if not already installed
-apt-get update
-apt-get install -y apache2
+sudo apt-get update
+sudo apt-get install -y apache2
 
 # Create a custom HTML page with "Hello Holberton"
-echo "Hello Holberton" > /var/www/html/index.html
+sudo echo "Hello Holberton" > /var/www/html/index.html
 
 # Configure Apache to serve the custom HTML page
-echo "ServerName localhost" >> /etc/apache2/apache2.conf
+sudo echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Start Apache
-service apache2 start
+sudo service apache2 start
 
 # Ensure Apache is configured to return HTTP 200 OK response
-echo 'RewriteEngine On' >> /etc/apache2/apache2.conf
-echo 'RewriteRule ^/$ /index.html [L]' >> /etc/apache2/apache2.conf
+sudo echo 'RewriteEngine On' >> /etc/apache2/apache2.conf
+sudo echo 'RewriteRule ^/$ /index.html [L]' >> /etc/apache2/apache2.conf
 
 # Restart Apache to apply changes
-service apache2 restart
+sudo service apache2 restart
