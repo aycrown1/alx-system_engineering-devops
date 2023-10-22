@@ -1,0 +1,59 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listen\ers
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+    maxconn 2048
+    tune.ssl.default-dh-param 2048
+
+    # Default SSL material locations                                           
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+
+    # Default ciphers to use on SSL-enabled listening sockets.                 
+    # For more information, see...                                             
+    # https://ssl-config.mozilla.org/#server=haproxy&version=2.1&config=interm\ediate&openssl=1.1.1k&guideline=5.7                                            
+    # intermediate configuration                                               
+    ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GC\M-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA\-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-R\SA-AES256-GCM-SHA384:DHE-RSA-CHACHA20-POLY1305
+    ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA38\4:TLS_CHACHA20_POLY1305_SHA256
+    ssl-default-bind-options prefer-client-ciphers no-sslv3 no-tlsv10 no-tlsv1\1 no-tls-tickets
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    option forwardfor
+    option http-server-close
+    timeout connect 5000
+    timeout client 50000
+    timeout server 50000
+    errorfile 400 /etc/haproxy/errors/400.http
+    errorfile 403 /etc/haproxy/errors/403.http
+    errorfile 408 /etc/haproxy/errors/408.http
+    errorfile 500 /etc/haproxy/errors/500.http
+    errorfile 502 /etc/haproxy/errors/502.http
+    errorfile 503 /etc/haproxy/errors/503.http
+    errorfile 504 /etc/haproxy/errors/504.http
+
+frontend http-in
+    bind *:80
+    stats enable
+    stats uri /haproxy?stats
+    option httpclose
+    default_backend servers
+
+frontend https-in
+    bind *:443 ssl crt /etc/haproxy/certs/combined.pem
+    http-request add-header X-Forwarded-Proto https
+    redirect scheme http if !{ ssl_fc }
+    default_backend servers
+
+backend servers
+    balance roundrobin
+    server 129-web-01 54.236.49.188:80 check
+    server 129-web-02 35.153.192.46:80 check
