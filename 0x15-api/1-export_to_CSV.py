@@ -4,8 +4,9 @@
  extend your Python script to export data in the CSV format
 """
 
-import json
+
 import csv
+import json
 import urllib.request
 import sys
 
