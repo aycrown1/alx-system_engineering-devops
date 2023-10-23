@@ -4,18 +4,16 @@
 """
 
 import json
-import urllib.request
-import sys
+import requests
+from sys import argv
 
 if __name__ == "__main__":
-    user_id = sys.argv[1]
+    user_id = argv[1]
     user_url = "https://jsonplaceholder.typicode.com/users/" + user_id
-    with urllib.request.urlopen(user_url) as response:
-        user_dict = json.load(response)
+    user_dict = requests.get(user_url).json()
     user_name = user_dict.get("name")
-    with urllib.request.urlopen(
-            "https://jsonplaceholder.typicode.com/todos") as todo_response:
-        user_todo = json.load(todo_response)
+    user_todo = requests.get("https://jsonplaceholder.typicode.com/todos")
+    user_todo = user_todo.json()
     total_todo = 0
     completed_titles = []
     number_completed = 0
