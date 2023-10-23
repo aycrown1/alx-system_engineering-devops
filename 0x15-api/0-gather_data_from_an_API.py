@@ -13,7 +13,8 @@ if __name__ == "__main__":
     with urllib.request.urlopen(user_url) as response:
         user_dict = json.load(response)
     user_name = user_dict.get("name")
-    with urllib.request.urlopen("https://jsonplaceholder.typicode.com/todos") as todo_response:
+    with urllib.request.urlopen(
+            "https://jsonplaceholder.typicode.com/todos") as todo_response:
         user_todo = json.load(todo_response)
     total_todo = 0
     completed_titles = []
