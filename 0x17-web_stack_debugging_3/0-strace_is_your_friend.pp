@@ -2,4 +2,5 @@
 # our manifest is to replace the occurance of `phpp` in the /var/www/html/wp-settings.php
 exec { 'replace_phpp_with_php':
   command => "sed -i 's/phpp/php/' /var/www/html/wp-settings.php",
+  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
 }
