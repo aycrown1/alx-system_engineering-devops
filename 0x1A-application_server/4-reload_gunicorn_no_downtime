@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# A script to reload Gunicorn in a graceful way.
+PIDS=$(pgrep -f gunicorn)
+for PID in $PIDS; do
+    pkill -HUP "$PID"
+done
